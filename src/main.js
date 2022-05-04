@@ -1,5 +1,4 @@
-const { app, BrowserWindow } = require('electron')
-
+const { app, BrowserWindow, Menu, MenuItem} = require('electron')  
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
@@ -19,6 +18,8 @@ function createWindow () {
   // and load the index.html of the app.
   win.loadFile('src/html/index.html')
 
+  win.setMenu(null); //removes the default menu
+
   // Open the DevTools.
   //win.webContents.openDevTools()
 
@@ -34,7 +35,76 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+
+
+
+app.on('ready', function(){ 
+  createWindow();
+  const template = [
+    {
+       label: 'File',
+       submenu: [
+          {
+             label: 'New Connection'
+          },
+          {
+             label: 'Reconnect all Active Connections'
+          },
+          {
+             label: 'Export to File'
+          },
+          {
+            type: 'separator'
+         },
+          {
+            role: 'Quit'
+          }
+       ]
+    },
+    {
+      label: 'View',
+      submenu: [
+         {
+            role: 'reload'
+         },
+         {
+            role: 'zoomIn'
+         },
+         {
+          role: 'zoomOut'
+       },
+     {
+      role: 'togglefullscreen'
+   },
+   {
+    role: 'toggledevtools'
+ },
+      ]
+   },
+    {
+       label: 'Tools',
+       submenu: [
+          {
+             label: 'SSH File Transfer'
+          },
+       ]
+    },
+    
+    {
+       role: 'Help',
+       submenu: [
+          {
+             label: 'About '
+          },
+          {
+             label: 'Contact'
+          },
+       ]
+    }
+  ]
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
