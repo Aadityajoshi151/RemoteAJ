@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, MenuItem} = require('electron')  
+const { app, BrowserWindow, Menu, MenuItem, ipcMain} = require('electron')  
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
@@ -64,6 +64,10 @@ app.on('ready', function(){
     {
       label: 'View',
       submenu: [
+         { label: 'Show Quick Connect Toolbar', type: 'checkbox', checked: true, click: function(event){
+            win.webContents.send('quick_connect_toolbar_toggle', event.checked);
+         }},
+         { type: "separator"},
          {
             role: 'reload'
          },

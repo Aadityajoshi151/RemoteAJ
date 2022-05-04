@@ -7,6 +7,18 @@
     <title>RemoteAJ</title>
 </head>
 <body>
-    <h1>Hello World</h1>
+    <div id="quick_connect_toolbar">
+        <input type="text" id="quick_connect_input">     
+        <select id="quick_connect_protocols">
+            <option value="SSH">SSH</option>
+            <option value="RDP">RDP</option>
+            <option value="VNC">VNC</option>
+            <option value="Telnet">Telnet</option>
+            <option value="HTTP_HTTPS">HTTP/HTTPS</option>
+            <option value="rlogin">rlogin</option>
+        </select>
+        <button id="quick_connect_button">Connect</button>
+    </div>
+    <script src="../js/index.js"></script>
 </body>
 </html>
