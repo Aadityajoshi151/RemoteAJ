@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RemoteAJ</title>
+    <link rel="stylesheet" href="node_modules/xterm/css/xterm.css">
+    <script src="node_modules/xterm/lib/xterm.js"></script>
 </head>
 <body>
     <div id="quick_connect_toolbar">
@@ -19,9 +21,7 @@
         </select>
         <button id="quick_connect_button">Connect</button>
     </div>
-    <template name="myterminal">
-        <div id="terminal-container"></div>
-    </template>
+    <div id="terminal"></div>
     <script src="../js/index.js"></script>
 </body>
 </html>

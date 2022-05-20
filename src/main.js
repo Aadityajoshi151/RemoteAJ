@@ -1,6 +1,11 @@
 const { app, BrowserWindow, Menu, MenuItem, ipcMain} = require('electron')  
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
+const pty = require("node-pty");
+const os = require("os");
+var shell = os.platform() === "win32" ? "powershell.exe" : "bash";
+
+
 let win
 
 function createWindow () {
@@ -108,6 +113,21 @@ app.on('ready', function(){
   ]
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
+  var ptyProcess = pty.spawn(shell, [], {
+   name: "xterm-color",
+   cols: 80,
+   rows: 30,
+   cwd: process.env.HOME,
+   env: process.env
+});
+
+ptyProcess.on('data', function(data) {
+   mainWindow.webContents.send("terminal.incomingData", data);
+   console.log("Data sent");
+});
+ipcMain.on("terminal.keystroke", (event, key) => {
+   ptyProcess.write(key);
+});
 })
 
 // Quit when all windows are closed.
